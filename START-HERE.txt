@@ -1,0 +1,14 @@
+HOW TO OPEN YOUR DSA PROJECT
+
+1. Right-click DSA-Graph-Visualizer.zip and choose Extract All.
+2. Open the extracted folder. Do not open files from inside the ZIP.
+3. Double-click DSA-Project.code-workspace to open the project in VS Code.
+   Alternatively: open VS Code > File > Open Folder > choose the extracted folder.
+4. To RUN the website, double-click index.html in File Explorer.
+   It opens in your web browser. VS Code is where you edit the code.
+5. After editing: save in VS Code, then refresh the browser.
+
+No npm install, Python, database, API key, or extension is required.
+Keep index.html, style.css, and app.js in the same folder.
+
+Read README.md for features and explanations of BFS and DFS.
