@@ -1,79 +1,79 @@
-# Organization Network Analysis — Graph Traversal Visualizer
+# Network Lab — DSA Graph Visualizer
 
-A browser-based DSA project built with HTML, CSS, and JavaScript.
-No packages, API keys, database, or build step are required.
+An interactive, dependency-free laboratory for understanding breadth-first search and depth-first search on undirected, unweighted graphs.
 
-## Run it with VS Code
+![Network Lab preview](preview.png)
 
-1. Extract the ZIP file.
-2. In VS Code, choose File > Open Folder and select organization-network-visualizer.
-3. Open index.html from that folder in your web browser (double-click it in File Explorer).
-4. Edit the files in VS Code, save, and refresh your browser to see your changes.
+## Run
 
-Keep index.html, style.css, and app.js together in the same folder.
-If you already use a local preview/server extension in VS Code, you can also serve this folder with it.
+Open this folder in VS Code. In the PowerShell terminal:
+
+```powershell
+start .\index.html
+```
+
+Or open `index.html` directly in your browser. No installation or build step is required.
+
+## Explore
+
+- Watch individual discoveries, visits, and DFS returns.
+- Inspect the BFS queue or DFS call stack at each step.
+- See BFS shortest distances and the traversal discovery tree.
+- Play, pause, replay, step backward, or scrub the timeline.
+- Add or remove nodes and connections; undo the last 30 edits.
+- Try organization, cycle, and disconnected examples.
+- Save automatically in browser storage; export and import validated JSON graphs.
+- Switch between light and dark themes.
+- Use a responsive layout, keyboard controls, and accessible node buttons.
+
+Space toggles playback and arrow keys step when focus is outside an interactive control. Focus a graph node and press Enter or Space to start from it.
+
+The graph supports 1–18 nodes and names up to 24 characters. Names are unique without regard to case. Duplicate edges and self-connections are rejected. Removing a node also removes its incident connections. Loading or importing a graph can be undone.
+
+## Algorithms
+
+BFS uses an adjacency list, a queue with a moving head index, and a visited set. It discovers each node once and computes shortest distance by edge count. DFS uses recursion and a visited set; separate return frames show backtracking. Neighbor order follows edge insertion order. A traversal explores only the starting node's connected component.
+
+For the organization example starting at CEO:
+
+- BFS: CEO → HR → Tech → Ana → Ben → Ravi → Sara
+- DFS: CEO → HR → Ana → Ben → Tech → Ravi → Sara
+
+Core traversal takes O(V + E) time and O(V) auxiliary space. Playback records O(V) snapshots of up to O(V) data, so snapshot storage can take O(V²) space. Rendering and network statistics have additional costs; these do not change the core graph algorithm complexity. DFS depth badges are not displayed because DFS does not guarantee shortest paths.
 
 ## Files
 
-- index.html: page structure, controls, and accessible labels.
-- style.css: colors, layout, responsive styles, and node presentation.
-- app.js: graph data, BFS and DFS, animation, editing controls, and network analysis.
-- README.md: setup instructions and an explanation of the project.
+| File | Purpose |
+| --- | --- |
+| `index.html` | Interface and accessible controls |
+| `style.css` | Responsive layout, graph states, and themes |
+| `algorithms.js` | Pure traversal and connected-component functions |
+| `app.js` | Editing, playback, validation, and browser storage |
+| `algorithms.test.cjs` | Algorithm regression checks |
 
-For easier reading in VS Code, use Format Document on the HTML, CSS, and JavaScript files.
+## Verify
 
-## Try the example
+With Node.js installed:
 
-1. Keep CEO as the starting node.
-2. Choose Breadth-first search (BFS).
-3. Press Start to animate, or Step to advance one step at a time.
-4. Use Pause, Reset traversal, and the Step duration slider as needed.
-5. Switch to Depth-first search (DFS) to compare the visiting order.
+```powershell
+node algorithms.test.cjs
+```
 
-BFS order from CEO:
-CEO -> HR -> Tech -> Ana -> Ben -> Ravi -> Sara
+Checks cover BFS/DFS order, DFS returns, shortest distances, cycles, disconnected graphs, and a single node.
 
-DFS order from CEO:
-CEO -> HR -> Ana -> Ben -> Tech -> Ravi -> Sara
+Manual checks:
 
-The example is an undirected graph: a connection means "works with", rather than a directed reporting relationship.
-Neighbors are considered in connection insertion order.
+1. Add Finance; the connected-group count becomes 2. Connect it to CEO; the count becomes 1.
+2. Delete Finance, then Undo. Refresh and verify the restored graph persists.
+3. Select DFS, play to completion, then step backward through return frames.
+4. Export a graph and import it again. An invalid graph should show an error without changing the network.
+5. Try the dark theme and a narrow browser window.
 
-## Edit the network
+## Publish a live demo
 
-- Enter a unique person or department name and press +.
-- Select two different nodes and press Add connection.
-- Click a node, or use Start from, to change the starting point.
-- Restore example returns to the original seven-node network.
+Upload these files to the root of your GitHub repository, including `algorithms.js`. In the repository, open **Settings → Pages**, choose **Deploy from a branch**, select **main** and **/(root)**, then Save. GitHub will display the demo URL after publishing. Use that URL in your repository's About section.
 
-Adding a node initially creates a disconnected group. Connect it to an existing node to make it reachable.
-The interface supports up to 18 nodes and names of up to 24 characters.
-Duplicate names, duplicate connections, and connections from a node to itself are rejected.
-Changes live in browser memory and reset when the page is refreshed. This version does not save networks or include node/edge deletion.
+## Storage and limitations
 
-## How the DSA works
+Graphs and theme preferences are stored on the current browser/device. Storage for local files can vary between browsers; export JSON for a portable backup. No account or server is required. Undo history is kept only for the current page session. The visualizer models undirected, unweighted graphs and uses a compact automatic layout; dense networks may contain crossing edges. It does not yet include weighted algorithms or draggable positions.
 
-- adjacency(): converts the nodes and edges into a Map of neighbor arrays (an adjacency list).
-- traversal(): creates the animation snapshots for BFS or DFS.
-- BFS uses an array queue and a moving head index. It marks nodes discovered when they enter the queue, preventing duplicate visits in cycles.
-- DFS uses recursion and a visited Set. The displayed call stack represents the active recursive path.
-- networkStats(): counts connected components and the nodes reachable from the selected starting point.
-- step(), tick(), togglePlay(), and pause(): control traversal playback.
-- render() and draw(): update the panels and the SVG graph.
-
-The underlying BFS and DFS traversals take O(V + E) time and O(V) extra traversal space, where V is the number of nodes and E the number of edges. This educational visualizer additionally copies snapshots to enable playback; snapshot storage and copying can take O(V^2) space/time. Rendering costs are separate from the graph algorithm.
-
-The last animation step clears the active node and queue/stack and reports completion.
-A traversal explores only the connected component containing its starting node.
-
-## Optional browser-agent integration
-
-app.js contains optional WebMCP tool registration at the end. It is feature-detected and is skipped automatically in browsers that do not support it. The visualizer works without this integration.
-
-## Quick manual checks
-
-- Confirm the two example visit orders above.
-- Add Finance: connected groups should increase to 2 and CEO should still reach 7 of 8 nodes.
-- Connect CEO and Finance: connected groups should return to 1 and CEO should reach all 8 nodes.
-- Add a connection between Ana and Sara to create a cycle; every node should still be visited only once.
-- Pause playback and use Step to advance manually.

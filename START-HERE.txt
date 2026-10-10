@@ -1,14 +1,11 @@
-HOW TO OPEN YOUR DSA PROJECT
+Open this folder in VS Code and run in the PowerShell terminal:
 
-1. Right-click DSA-Graph-Visualizer.zip and choose Extract All.
-2. Open the extracted folder. Do not open files from inside the ZIP.
-3. Double-click DSA-Project.code-workspace to open the project in VS Code.
-   Alternatively: open VS Code > File > Open Folder > choose the extracted folder.
-4. To RUN the website, double-click index.html in File Explorer.
-   It opens in your web browser. VS Code is where you edit the code.
-5. After editing: save in VS Code, then refresh the browser.
+start .\index.html
 
-No npm install, Python, database, API key, or extension is required.
-Keep index.html, style.css, and app.js in the same folder.
+Upload index.html, style.css, algorithms.js, app.js, README.md, preview.png,
+and algorithms.test.cjs to GitHub. Replace the older files with the same names.
 
-Read README.md for features and explanations of BFS and DFS.
+The new algorithms.js file is required.
+
+See README.md for features, verification, and GitHub Pages publishing.
+
